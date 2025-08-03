@@ -13,7 +13,7 @@
         <div id="response-display">
             <div id="comments">
                 <div class="question">〜ですか？</div>
-                <div class="answer">はい</div>
+                <div class="response">はい</div>
             </div>
             <img src="images/responser.png" alt="回答者" id="main-owl" draggable="false" oncontextmenu="return false;" ontouchstart="return false;">
         </div>
@@ -31,7 +31,7 @@
     <div id="answer-form" style="display: none;">
         <p id="answer-text">解答を入力してください</p>
         <input type="text" id="answer-input" placeholder="例：フクロウ">
-        <button id="answer-confirmed">決定</button>
+        <button id="answer-confirmed" onclick="answerCheck()">決定</button>
         <button id="answer-back" onclick="answerFormClose()">戻る</button>
     </div>
     <script src="js/game.js"></script>

@@ -3,18 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c" rel="stylesheet">
     <title>逆アキネーター|ゲーム画面</title>
     <link rel="stylesheet" href="css/game.css" />
 </head>
 <body>
-    <div id="responser">
-        <div class="question">〜ですか？</div>
-        <div class="answer">はい</div>
-        <img src="responser.png" alt="回答者">
+    <div id="window">
+        <button id="quit" onclick="gameQuit()">中断する</button>
+        <div id="response-display">
+            <div id="comments">
+                <div class="question">〜ですか？</div>
+                <div class="answer">はい</div>
+            </div>
+            <img src="images/responser.png" alt="回答者" id="main-owl" draggable="false" oncontextmenu="return false;" ontouchstart="return false;">
+        </div>
     </div>
-    <label>質問を入力
-        <input type="text">
-    </label>
+    <div id="buttons">
+        <button id="question-button" onclick="questionFormOpen()">質問する（残り<span id="question-remain"></span>回まで）</button>
+        <button id="answer-button" onclick="answerFormOpen()">解答する</button>
+    </div>
+    <div id="question-form" style="display: none;">
+        <p id="question-text">質問を入力してください</p>
+        <input type="text" id="question-input" placeholder="例：それは〜なものですか">
+        <button id="question-confirmed" onclick="questionAdd()">決定</button>
+        <button id="question-back" onclick="questionFormClose()">戻る</button>
+    </div>
+    <div id="answer-form" style="display: none;">
+        <p id="answer-text">解答を入力してください</p>
+        <input type="text" id="answer-input" placeholder="例：フクロウ">
+        <button id="answer-confirmed">決定</button>
+        <button id="answer-back" onclick="answerFormClose()">戻る</button>
+    </div>
     <script src="js/game.js"></script>
 </body>
 </html>

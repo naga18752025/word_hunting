@@ -25,7 +25,7 @@ body {
 }
 
 #quit{
-    font-size: 1.5vh;
+    font-size: min(1.5vh, 3vw);
     align-self: flex-end;
     background-color: rgb(209, 209, 209);
     border: none;
@@ -64,6 +64,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: flex-start;
     width: 45%;
     height: 32vh;
     padding: 1vh 1vw;
@@ -72,10 +73,11 @@ body {
     border: none;
     border-radius: 1vh;
     -webkit-overflow-scrolling: touch; 
+
 }
 
 .question{
-    font-size: 1.8vh;
+    font-size: min(1.6vh, 2.3vw);
     position: relative;
     background-color: white;
     width: 90%;
@@ -98,7 +100,7 @@ body {
 }
 
 .response{
-    font-size: 1.8vh;
+    font-size: min(1.6vh, 2.3vw);
     position: relative;
     background-color: #d4b58a;
     width: 90%;
@@ -108,7 +110,7 @@ body {
     margin: 1vh 0;
 } 
 
-.answer::before{
+.response::before{
     content: '';
     position: absolute;
     top: 30%; 
@@ -130,7 +132,7 @@ body {
 }
 
 #question-button{
-    font-size: 2.5vh;
+    font-size: min(2.5vh, 4vw);
     width: 70%;
     padding: 2vh 2vw;
     border: none;
@@ -141,7 +143,7 @@ body {
 }
 
 #answer-button{
-    font-size: 2.5vh;
+    font-size: min(2.5vh, 4vw);
     width: 70%;
     padding: 2vh 2vw;
     border: none;
@@ -165,7 +167,7 @@ body {
 
 #question-input{
     text-align: center;
-    font-size: 2vh;
+    font-size: min(2vh, 3vw);
     margin-top: 4vh;
     padding: 1vh 1vw;
     width: 60%;
@@ -249,7 +251,7 @@ body {
 
 #answer-input{
     text-align: center;
-    font-size: 2vh;
+    font-size: min(2vh, 3vw);
     margin-top: 4vh;
     padding: 1vh 1vw;
     width: 60%;
@@ -275,4 +277,42 @@ body {
     border: none;
     border-radius: 0.5vh;
     background-color: aliceblue;
+}
+
+#check-answer-box{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5vh;
+}
+
+#check-answer-text1{
+    font-size: min(3vw, 2vh);
+    align-self: flex-start;
+}
+
+#check-answer-text2{
+    font-size: min(7vw, 5vh);
+    align-self: center;
+}
+
+#check-answer-text3{
+    font-size: min(3vw, 2vh);
+    align-self: flex-end;
+}
+
+#success, #failure{
+    color: white;
+    margin-top: 10vh;
+    font-size: min(2.5vh, 4vw);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5vh;
+    background-color: #435bbb;
+    padding: 5vh 10vw;
+    border: none;
+    border-radius: 1vh;
 }

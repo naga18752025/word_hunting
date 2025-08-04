@@ -12,8 +12,12 @@
         <button id="quit" onclick="gameQuit()">中断する</button>
         <div id="response-display">
             <div id="comments">
-                <div class="question">〜ですか？</div>
-                <div class="response">はい</div>
+                <div class="response">私の思い浮かべているものを当ててください</div>
+                <div id="check-answer-box" style="display: none;">
+                    <div id="check-answer-text1">正解は...</div>
+                    <div id="check-answer-text2">ふくろう</div>
+                    <div id="check-answer-text3">でした！</div>
+                </div>
             </div>
             <img src="images/responser.png" alt="回答者" id="main-owl" draggable="false" oncontextmenu="return false;" ontouchstart="return false;">
         </div>
@@ -33,6 +37,16 @@
         <input type="text" id="answer-input" placeholder="例：フクロウ">
         <button id="answer-confirmed" onclick="answerCheck()">決定</button>
         <button id="answer-back" onclick="answerFormClose()">戻る</button>
+    </div>
+    <div id="success" style="display: none;">
+        <div>🎊正解🎊</div>
+        <button>終了</button>
+    </div>
+    <div id="failure" style="display: none;">
+        <div>あなたの解答：<span id="checked-answer"></span></div>
+        <div>残念...不正解</div>
+        <div>また遊んでね</div>
+        <button>終了</button>
     </div>
     <script src="js/game.js"></script>
 </body>

@@ -1,5 +1,10 @@
+document.getElementById("check-answer-text2").textContent = "フクロウ";
+
 function gameQuit(){
-    confirm("本当にゲームを中断しますか？");
+    const result = confirm("本当にゲームを中断しますか？");
+    if(result){
+        window.location.href = "index.html";
+    }
 }
 
 function questionFormOpen(){
@@ -100,8 +105,22 @@ function questionCheck(){
 }
 
 function answerCheck(){
+    const result = confirm("本当にこの内容で解答しますか？");
+
+    if (!result) {
+        return;
+    }
+
+    document.querySelectorAll(".question").forEach(Q => {
+        Q.style.display = "none";
+    })
+    document.querySelectorAll(".response").forEach(R => {
+        R.style.display = "none";
+    })
+    
     
     const newComment = document.createElement("div");
+    newComment.id = "answer-checking";
     newComment.textContent = "解答確認中";
     const comment = document.createElement("span");
     comment.textContent = ".";
@@ -114,23 +133,24 @@ function answerCheck(){
     }
 
     const comments = document.getElementById("comments");
-    comments.innerHTML = "";
     comments.style.justifyContent = "center";
     comments.appendChild(newComment);
     comments.scrollTop = document.getElementById("comments").scrollHeight;
 
+    document.getElementById("checked-answer").textContent = document.getElementById("answer-input").value;
     answerFormClose();
     document.getElementById("buttons").style.display = "none";
-
     setTimeout(() => {
-        correctAnswer();
+        wrongAnswer();
     }, 2000);
 }
 
 function correctAnswer(){
+    document.getElementById("answer-checking").style.display = "none";
+    document.getElementById("check-answer-box").style.display = "flex";
+    document.getElementById("success").style.display = "flex";
+
     const comments = document.getElementById("comments");
-    comments.innerHTML = "";
-    comments.textContent = "🎊正解🎊";
 
     const images = ["images/responser.png", "images/smiler.png"];
     let currentIndex = 1;
@@ -140,6 +160,27 @@ function correctAnswer(){
         currentIndex = (currentIndex + 1) % images.length; 
         document.getElementById("main-owl").src = images[currentIndex];
     }, 1500);
+}
+
+function wrongAnswer(){
+    document.getElementById("answer-checking").style.display = "none";
+    document.getElementById("check-answer-box").style.display = "flex";
+    document.getElementById("failure").style.display = "flex";
+
+    const comments = document.getElementById("comments");
+
+    const images = ["images/responser.png", "images/sadder.png"];
+    let currentIndex = 1;
+    
+    document.getElementById("main-owl").src = images[1];
+    const Interval = setInterval(() => {
+        currentIndex = (currentIndex + 1) % images.length; 
+        document.getElementById("main-owl").src = images[currentIndex];
+    }, 1500);
+
+    setTimeout(() => {
+        clearInterval(Interval);
+    }, 6000);
 }
 
 

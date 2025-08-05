@@ -1,6 +1,4 @@
-const OPENAI_API_KEY = "apiki-wokaitekudasai"; // ←ここに実際のAPIキーを入れる
-// OpenAI APIのエンドポイント
-const OPENAI_API_URL = "https://api.openai.com/v1/chat/completions";
+const BACKEND_URL = "http://localhost:3001";
 
 // AIが選んだキャラクターを記憶しておく変数
 let selectedCharacter = null;
@@ -26,8 +24,8 @@ async function startGame() {
     `;
   // AIが何かを一つ選んでくれる
   try {
-    const response = await callOpenAI(prompt);
-    selectedCharacter = response.trim(); // 前後の空白を削除
+    const response = await callBackendAPI(prompt);
+    selectedCharacter = response.content.trim(); // 前後の空白を削除
     console.log("AIが選んだキャラクター:", selectedCharacter); // こっちから見るとき用
     return { success: true, character: selectedCharacter };
   } catch (error) {
@@ -58,8 +56,8 @@ async function askQuestion(question) {
     `;
 
   try {
-    const response = await callOpenAI(prompt);
-    return { success: true, answer: response.trim() };
+    const response = await callBackendAPI(prompt);
+    return { success: true, answer: response.content.trim() };
   } catch (error) {
     console.error("質問でエラー:", error);
     return { success: false, error: error.message };
@@ -85,26 +83,14 @@ async function revealCharacter() {
  * OpenAI APIを呼び出す共通関数
  * @param {string} prompt - AIに送るメッセージ
  */
-async function callOpenAI(prompt) {
+async function callBackendAPI(prompt) {
   // fetch()でAPIにリクエストを送信
-  const response = await fetch(OPENAI_API_URL, {
+  const response = await fetch(BACKEND_URL + "/api/openai", {
     method: "POST", // POSTメソッドでデータを送信
     headers: {
       "Content-Type": "application/json", // JSONデータを送ることを明示
-      Authorization: `Bearer ${OPENAI_API_KEY}`, // APIキーで認証
     },
-    body: JSON.stringify({
-      // JavaScriptオブジェクトをJSON文字列に変換
-      model: "gpt-3.5-turbo", // 使用するAIモデル
-      messages: [
-        {
-          role: "user", // ユーザーからのメッセージ
-          content: prompt, // 実際のメッセージ内容
-        },
-      ],
-      max_tokens: 100, // 返答の最大文字数制限
-      temperature: 0.7, // 回答のランダム性（0〜1、高いほどランダム）
-    }),
+    body: JSON.stringify({ prompt }),
   });
 
   // レスポンスが成功かチェック
@@ -114,8 +100,10 @@ async function callOpenAI(prompt) {
 
   // レスポンスをJSONとして解析
   const data = await response.json();
-
-  // AIの回答を取り出して返す
-  return data.choices[0].message.content;
+  if (!data.success) {
+    throw new Error(data.error);
+  }
+  return data; // { success: true, content: "回答" }
+  // ここまでがAPIの呼び出し部分
 }
-// ここまでがAPIのコード
+// 改善の余地としてはエラーハンドリングをしっかりするぐらいだと思います

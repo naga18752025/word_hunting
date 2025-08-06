@@ -9,9 +9,8 @@ app.use(express.json());
 
 app.post("/api/openai", async (req, res) => {
   try {
-    const { prompt } = req.body;
-
-    console.log("APIキー:", process.env.OPENAI_API_KEY);
+    const { prompt, temperature } = req.body;
+    console.log(temperature);
 
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
@@ -23,7 +22,9 @@ app.post("/api/openai", async (req, res) => {
         model: "gpt-4o",
         messages: [{ role: "user", content: prompt }],
         max_tokens: 100,
-        temperature: 0.8,
+        temperature: temperature,
+        top_p: 1.0,
+        frequency_penalty: 0.2,
       }),
     });
 

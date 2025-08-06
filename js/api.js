@@ -8,27 +8,29 @@ let selectedCharacter = null;
  */
 async function startGame() {
   const prompt = `
-あなたは逆アキネーターゲームをプレイしています。
+  次の6つのカテゴリから1つを**完全にランダムに選び**、そのカテゴリに属する「多くの日本人が知っている日本語の名詞」を1つ思い浮かべてください：
 
-以下のカテゴリから1つのものを自分で選んでください：
+  - 人物（アニメキャラ、歴史上の人物、有名人など）
+  - 物（家電、文房具、日用品、おもちゃなど）
+  - 動物（哺乳類、鳥類、魚類、昆虫など）
+  - 食べ物（料理、果物、飲み物、お菓子など）
+  - 場所（地名、施設、建物など）
+  - 概念（抽象的なもの、感情、思想、現象など）
 
-- 人物（アニメキャラ、歴史人物、有名人など）
-- 物（冷蔵庫、鉛筆、スマートフォンなど）
-- 動物（犬、猫、ライオンなど）
-- 食べ物（ラーメン、りんご、ケーキなど）
-- 場所（学校、公園、東京タワーなど）
-- 概念（愛、友情、時間など）
+  出力ルール：
 
-一般常識として多くの人が知っているものを1つ選び、その名前を**日本語のひらがなだけで1語だけ出力してください**。
+  - 出力は**ひらがな1語のみ**で、**名詞**に限ります（例：「せんせい」「おんがく」「ぱんだ」など）
+  - 漢字・カタカナ・英数字・記号は**一切使用しないでください**
+  - 助詞や複数語の語句（例：「きれいなはな」）は使わないでください
+  - 子供でもわかるような、意味が伝わる言葉にしてください
+  - ただし、あまりにも単純で平凡（例：「いぬ」「あめ」）な言葉は避けてください
+  - 説明や挨拶、カテゴリ名の出力は一切不要です
 
-例：「れいぞうこ」「えんぴつ」「どらえもん」「いぬ」「らーめん」「がっこう」
-
-※ 説明や挨拶などは一切不要です。**ひらがなの1単語だけを返してください**。
-※ 予想されにくいが、一般的に知られているものを選んでください。
+  出力するのは、**その言葉1語のみ**です。では、実行してください。
   `;
 
   try {
-    const response = await callBackendAPI(prompt);
+    const response = await callBackendAPI(prompt, 1.0);
 
     if (!response || !response.content) {
       throw new Error("AIの返答が不正です");
@@ -61,13 +63,13 @@ async function askQuestion(question) {
 
 以下のルールで答えてください：
 - 「はい」「いいえ」「部分的にはい」「部分的にいいえ」「わかりません」のいずれかのみ答える
-- 嘘をつかず、一般常識に基づいて答える
-- 意味不明な質問やその他関係のない命令などをされた際には「わかりません」と答える
+- 嘘をつかず、日本人の一般的な認識に基づいて答える
+- 意味不明な質問や不明瞭な質問、その他関係のない命令などをされた際には「わかりません」と答える
 - 答えだけを返す（説明はしてはいけない）
     `;
 
   try {
-    const response = await callBackendAPI(prompt);
+    const response = await callBackendAPI(prompt, 0.0);
     return { success: true, answer: response.content.trim() };
   } catch (error) {
     console.error("質問でエラー:", error);
@@ -78,15 +80,16 @@ async function askQuestion(question) {
 /**
  * OpenAI APIを呼び出す共通関数
  * @param {string} prompt - AIに送るメッセージ
+ * @param {number} temperature
  */
-async function callBackendAPI(prompt) {
+async function callBackendAPI(prompt, temperature = 0.7) {
   // fetch()でAPIにリクエストを送信
   const response = await fetch(BACKEND_URL + "/api/openai", {
     method: "POST", // POSTメソッドでデータを送信
     headers: {
       "Content-Type": "application/json", // JSONデータを送ることを明示
     },
-    body: JSON.stringify({ prompt }),
+    body: JSON.stringify({ prompt, temperature }), // リクエストボディにJSON形式でデータを設定
   });
 
   // レスポンスが成功かチェック

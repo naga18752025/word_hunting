@@ -1,13 +1,28 @@
-document.getElementById("check-answer-text2").textContent = "フクロウ";
+let theme = null;
 
+async function fetchTheme(){
+    const { character: theme } = await startGame();
+    return theme;
+}
+async function main() {
+    theme = await fetchTheme(); // ←ここでPromiseを「開封」！
+}
+main();
+
+
+// ゲームの中断
 function gameQuit(){
     const result = confirm("本当にゲームを中断しますか？");
     if(result){
+        document.getElementById("loading3").style.display = "flex";
         window.location.href = "index.html";
     }
 }
 
+// 質問の入力画面を表示する
 function questionFormOpen(){
+
+    // 質問の残り回数があるかを確認
     if(questionNokori <0){
         return;
     }
@@ -15,146 +30,164 @@ function questionFormOpen(){
     document.getElementById("question-form").style.display = "flex";
 }
 
+// 質問の入力画面を閉じる
 function questionFormClose(){
     document.getElementById("buttons").style.display = "flex";
     document.getElementById("question-form").style.display = "none";
-    document.getElementById("question-input").value = "";
 }
 
+// 解答の入力画面を表示する
 function answerFormOpen(){
     document.getElementById("buttons").style.display = "none";
     document.getElementById("answer-form").style.display = "flex";
 }
 
+// 解答の入力画面を閉じる
 function answerFormClose(){
     document.getElementById("buttons").style.display = "flex";
     document.getElementById("answer-form").style.display = "none";
-    document.getElementById("answer-input").value = "";
 }
 
+// 質問追加工程
 function questionAdd(){
     const question = document.getElementById("question-input");
 
+    // 質問が入力されているか確認
     if(question.value === ""){
         alert("質問を入力してください")
         return;
     }
 
+    // 本当にこの質問でいいか確認
     const result = confirm("本当にこの内容で質問しますか？");
-
     if (!result) {
         return;
     }
 
+    //質問のコメントを作成してコメント欄に追加
     const newComment = document.createElement("div");
     const comment = question.value;
-
     newComment.textContent = comment;
     newComment.classList.add("question");
-
     document.getElementById("comments").appendChild(newComment);
 
     questionCounter();
+
     questionFormClose();
     document.getElementById("buttons").style.display = "none";
+
     responseAdd();
 }
 
 let questionNokori = 15;
 
+// 質問回数を管理
 function questionCounter(){
 
+    // 残りの質問可能回数を減少させる
     document.getElementById("question-remain").textContent = questionNokori;
     questionNokori --;
 
+    // 残り回数がなくなったら質問ボタンの見た目を変更する
     if(questionNokori < 0){
         document.getElementById("question-button").style.backgroundColor = "gray";
         document.getElementById("question-button").textContent = "質問終了";
     }
 }
-
+//　残り質問可能回数の初期値を設定
 questionCounter();
 
+// AIの回答追加の前工程
 function responseAdd(){
+
+    // 考え中の状態のコメントを作成してコメント欄に追加
     const newComment = document.createElement("div");
     const comment = document.createElement("span");
     comment.textContent = "・";
-
     newComment.classList.add("response");
     newComment.classList.add("loading");
-
     for (let i = 0; i < 5; i++) {
         const clone = comment.cloneNode(true);
         newComment.appendChild(clone);
     }
-
     const comments = document.getElementById("comments");
     comments.appendChild(newComment);
-    comments.scrollTop = document.getElementById("comments").scrollHeight;
+    comments.scrollTop = document.getElementById("comments").scrollHeight; // コメント欄の一番下まで移動させる
 
     questionCheck();
 }
 
-function questionCheck(){
-    setTimeout(() => {
-        const lastComment = document.querySelector("#comments .response:last-child");
-        lastComment.innerHTML = "";
-        lastComment.textContent = "はい";
-        document.getElementById("buttons").style.display = "flex";
-    }, 2000);
+// AIの回答を実際に追加
+async function questionCheck(){
+    const { answer: response } = await askQuestion(document.getElementById("question-input").value);
+    const lastComment = document.querySelector("#comments .response:last-child");
+    lastComment.innerHTML = "";
+    lastComment.textContent = response;
+    document.getElementById("buttons").style.display = "flex";
+    document.getElementById("question-input").value = ""; 
 }
 
+// 解答の決定工程
 function answerCheck(){
-    const result = confirm("本当にこの内容で解答しますか？");
 
+    // 本当にこの解答でいいのかを確認
+    const result = confirm("本当にこの内容で解答しますか？");
     if (!result) {
         return;
     }
 
+    // コメント欄の質問とAI回答を非表示にする
     document.querySelectorAll(".question").forEach(Q => {
         Q.style.display = "none";
     })
     document.querySelectorAll(".response").forEach(R => {
         R.style.display = "none";
     })
-    
-    
+
+    // 解答確認中の画面を作成して表示
     const newComment = document.createElement("div");
     newComment.id = "answer-checking";
     newComment.textContent = "解答確認中";
     const comment = document.createElement("span");
     comment.textContent = ".";
-
     newComment.classList.add("loading2");
-
     for (let i = 0; i < 3; i++) {
         const clone = comment.cloneNode(true);
         newComment.appendChild(clone);
     }
-
     const comments = document.getElementById("comments");
     comments.style.justifyContent = "center";
     comments.appendChild(newComment);
-    comments.scrollTop = document.getElementById("comments").scrollHeight;
+    comments.scrollTop = document.getElementById("comments").scrollHeight; // コメント欄の一番下まで移動させる
 
+    // 利用者の解答をhtmlに追加しておく
     document.getElementById("checked-answer").textContent = document.getElementById("answer-input").value;
+
     answerFormClose();
     document.getElementById("buttons").style.display = "none";
-    setTimeout(() => {
+
+    if(theme === document.getElementById("answer-input").value.trim()){
+        correctAnswer();
+        document.getElementById("checked-answer").textContent = document.getElementById("answer-input").value;
+    }else{
         wrongAnswer();
-    }, 2000);
+        document.getElementById("checked-answer").textContent = document.getElementById("answer-input").value;
+    };
 }
 
+// 解答が正しかった場合
 function correctAnswer(){
+
+    // 解答確認中の画面を非表示にする
     document.getElementById("answer-checking").style.display = "none";
+
     document.getElementById("check-answer-box").style.display = "flex";
-    document.getElementById("success").style.display = "flex";
+    document.getElementById("result").style.display = "flex";
+    document.getElementById("SorF").textContent = "🎊大正解🎊";
 
-    const comments = document.getElementById("comments");
-
+    // フクロウの状態を正解した時のものにする
     const images = ["images/responser.png", "images/smiler.png"];
     let currentIndex = 1;
-    
     document.getElementById("main-owl").src = images[1];
     setInterval(() => {
         currentIndex = (currentIndex + 1) % images.length; 
@@ -162,25 +195,32 @@ function correctAnswer(){
     }, 1500);
 }
 
+//解答が間違っていた場合
 function wrongAnswer(){
+
+    // 解答確認中の画面を非表示にする
     document.getElementById("answer-checking").style.display = "none";
+
     document.getElementById("check-answer-box").style.display = "flex";
-    document.getElementById("failure").style.display = "flex";
+    document.getElementById("result").style.display = "flex";
+    document.getElementById("SorF").textContent = "残念...不正解";
 
-    const comments = document.getElementById("comments");
-
+    // フクロウの状態を間違えた時のものにする
     const images = ["images/responser.png", "images/sadder.png"];
     let currentIndex = 1;
-    
     document.getElementById("main-owl").src = images[1];
     const Interval = setInterval(() => {
         currentIndex = (currentIndex + 1) % images.length; 
         document.getElementById("main-owl").src = images[currentIndex];
     }, 1500);
-
     setTimeout(() => {
         clearInterval(Interval);
     }, 6000);
+}
+
+function finishGame(){
+    document.getElementById("loading3").style.display = "flex";
+    window.location.href = "index.html";
 }
 
 

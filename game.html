@@ -33,21 +33,22 @@
         <button id="question-back" onclick="questionFormClose()">戻る</button>
     </div>
     <div id="answer-form" style="display: none;">
-        <p id="answer-text">解答を入力してください</p>
+        <p id="answer-text">解答を全て<span style="color: red;;">ひらがな</span>で入力してください</p>
         <input type="text" id="answer-input" placeholder="例：フクロウ">
         <button id="answer-confirmed" onclick="answerCheck()">決定</button>
         <button id="answer-back" onclick="answerFormClose()">戻る</button>
     </div>
-    <div id="success" style="display: none;">
-        <div>🎊正解🎊</div>
-        <button>終了</button>
+    <div id="result" style="display: none;">
+        <div id="final-answer">あなたの解答：<span id="checked-answer"></span></div>
+        <div id="SorF"></div>
+        <div id="last-message">また遊んでね</div>
+        <button id="finish-button" onclick="finishGame()">終了</button>
     </div>
-    <div id="failure" style="display: none;">
-        <div>あなたの解答：<span id="checked-answer"></span></div>
-        <div>残念...不正解</div>
-        <div>また遊んでね</div>
-        <button>終了</button>
+    <div id="loading3" style="display: none;">
+        <div class="square-move-2"></div>
     </div>
+
+    <script src="js/api.js"></script>
     <script src="js/game.js"></script>
 </body>
 </html>

@@ -303,9 +303,9 @@ body {
     align-self: flex-end;
 }
 
-#success, #failure{
+#result{
     color: white;
-    margin-top: 10vh;
+    margin-top: 5vh;
     font-size: min(2.5vh, 4vw);
     display: flex;
     flex-direction: column;
@@ -315,4 +315,110 @@ body {
     padding: 5vh 10vw;
     border: none;
     border-radius: 1vh;
+}
+
+#final-answer{
+    font-size: min(2vh, 3vw);
+}
+
+#SorF{
+    font-size: min(4vh, 6.5vw);
+}
+
+#finish-button{
+    font-size: min(2vh, 3vw);
+    padding: 0.5vh 5vw;
+    border: none;
+    border-radius: 0.5vh;
+    background-color: rgb(253, 255, 225);
+}
+
+#loading3{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    background: rgba(0,0,0,50%);
+    padding: 40px 20px;
+    overflow: auto;
+    opacity: 1;
+    visibility: visible;
+    box-sizing: border-box;
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.square-move-2 {
+    --size: 5vh;
+    --color: currentColor;
+    --animation-timing-function: linear;
+    --animation-duration: 1.5s;
+    position: relative;
+    width: var(--size);
+    height: var(--size);
+}
+
+.square-move-2::before,
+.square-move-2::after {
+    content: '';
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    background-color: var(--color);
+}
+
+.square-move-2::before {
+    top: 0;
+    left: 0;
+    transform: translate(0%, 0%);
+    animation: var(--animation-timing-function) var(--animation-duration) infinite square-move-2-animation-before;
+}
+
+.square-move-2::after {
+    right: 0;
+    bottom: 0;
+    transform: translate(0%, 0%);
+    animation: var(--animation-timing-function) var(--animation-duration) infinite square-move-2-animation-after;
+}
+
+@keyframes square-move-2-animation-before {
+    0% {
+        transform: translate(0%, 0%);
+    }
+    25% {
+        transform: translate(100%, 0%);
+    }
+    50% {
+        transform: translate(100%, 100%);
+    }
+    75% {
+        transform: translate(0%, 100%);
+    }
+    100% {
+        transform: translate(0%, 0%);
+    }
+}
+
+@keyframes square-move-2-animation-after {
+    0% {
+        transform: translate(0%, 0%);
+    }
+    25% {
+        transform: translate(-100%, 0%);
+    }
+    50% {
+        transform: translate(-100%, -100%);
+    }
+    75% {
+        transform: translate(0%, -100%);
+    }
+    100% {
+        transform: translate(0%, 0%);
+    }
 }

@@ -40,7 +40,7 @@ async function startGame() {
     return { success: true, character: selectedCharacter };
   } catch (error) {
     console.error("ゲーム開始でエラー:", error);
-    return { success: false, error: error.message };
+    return { success: false, character: null };
   }
 }
 
@@ -69,7 +69,7 @@ async function askQuestion(question) {
     return { success: true, answer: response.content.trim() };
   } catch (error) {
     console.error("質問でエラー:", error);
-    return { success: false, error: error.message };
+    return { success: false, answer: "通信に失敗しました" };
   }
 }
 

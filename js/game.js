@@ -6,6 +6,12 @@ async function fetchTheme(){
 }
 async function main() {
     theme = await fetchTheme(); // ←ここでPromiseを「開封」！
+    if (!theme) {
+        alert("ゲーム開始に失敗しました。もう一度試してください。");
+        window.location.href = "index.html";
+    }else{
+        document.getElementById("loading3").style.display = "none";
+    }
 }
 main();
 

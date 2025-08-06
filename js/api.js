@@ -24,6 +24,7 @@ async function startGame() {
 例：「れいぞうこ」「えんぴつ」「どらえもん」「いぬ」「らーめん」「がっこう」
 
 ※ 説明や挨拶などは一切不要です。**ひらがなの1単語だけを返してください**。
+※ 予想されにくいが、一般的に知られているものを選んでください。
   `;
 
   try {
@@ -36,6 +37,7 @@ async function startGame() {
     selectedCharacter = response.content.trim();
 
     document.getElementById("check-answer-text2").textContent = selectedCharacter;
+    console.log("選ばれたキャラクター:", selectedCharacter);
 
     return { success: true, character: selectedCharacter };
   } catch (error) {

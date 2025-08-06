@@ -23,7 +23,7 @@ app.post("/api/openai", async (req, res) => {
         model: "gpt-4o",
         messages: [{ role: "user", content: prompt }],
         max_tokens: 100,
-        temperature: 0.9,
+        temperature: 0.8,
       }),
     });
 

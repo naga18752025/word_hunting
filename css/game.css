@@ -15,13 +15,42 @@ body {
     justify-content: center;
 }
 
+#top-logo {
+    width: 100%;
+    display: flex;
+    margin-top: 1vh;
+    justify-content: center;
+    background-color: #2E4ABA;
+}
+
+#logo {
+    width: min(60vh, 50vw);
+    max-width: 400px;
+    filter: drop-shadow(0.2vh 0.2vh 0.4vh rgba(255, 255, 255, 0.5));
+}
+
 #window{
     width: 90%;
     height: auto;
-    margin-top: 5vh;
+    margin-top: 2vh;
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+#upper-buttons {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#timer {
+    color: white;
+    margin-left: 2vw;
+    align-self: flex-start;
+    font-size: min(2.0vh, 3.5vw);
+    height: 3vh;
 }
 
 #quit{

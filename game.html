@@ -8,8 +8,14 @@
     <link rel="stylesheet" href="css/game.css" />
 </head>
 <body>
+    <div id="top-logo">
+        <img src="images/title.png" alt="逆アキネーター" id="logo">
+    </div>
     <div id="window">
-        <button id="quit" onclick="gameQuit()">中断する</button>
+        <div id="upper-buttons">
+            <div id="timer">00:00</div>
+            <button id="quit" onclick="gameQuit()">中断する</button>
+        </div>
         <div id="response-display">
             <div id="comments">
                 <div class="response">私の思い浮かべているものを当ててください</div>
@@ -48,6 +54,7 @@
         <div class="square-move-2"></div>
     </div>
 
+    <script src="js/timer.js"></script>
     <script src="js/api.js"></script>
     <script src="js/game.js"></script>
 </body>

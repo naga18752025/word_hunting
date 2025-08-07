@@ -15,7 +15,6 @@ async function main() {
 }
 main();
 
-
 // ゲームの中断
 function gameQuit(){
     const result = confirm("本当にゲームを中断しますか？");
@@ -141,6 +140,8 @@ function answerCheck(){
     if (!result) {
         return;
     }
+
+    stopTimer(); // タイマーを止める
 
     // コメント欄の質問とAI回答を非表示にする
     document.querySelectorAll(".question").forEach(Q => {

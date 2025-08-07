@@ -11,6 +11,7 @@ async function main() {
         window.location.href = "index.html";
     }else{
         document.getElementById("loading3").style.display = "none";
+        startTimer(); // タイマーを開始
     }
 }
 main();

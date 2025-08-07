@@ -22,8 +22,6 @@ function startTimer() {
     }
 }
 
-startTimer();
-
 function stopTimer() {
     if (intervalId) {
     clearInterval(intervalId);

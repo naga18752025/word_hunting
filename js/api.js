@@ -1,4 +1,4 @@
-const BACKEND_URL = "https://dohack-reverse-akinator.onrender.com";
+const BACKEND_URL = "http://localhost:3001";
 
 // AIが選んだキャラクターを記憶しておく変数
 let selectedCharacter = null;

@@ -5,11 +5,7 @@ const fetch = require("node-fetch"); // node-fetch@2 を使ってください！
 
 const app = express();
 
-const corsOptions = {
-  origin: "https://naga18752025.github.io", // 自分の GitHub Pages だけ許可
-  methods: ["POST"],
-};
-app.use(cors(corsOptions));
+app.use(cors());
 
 app.use(express.json());
 

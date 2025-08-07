@@ -24,7 +24,6 @@ app.post("/api/openai", async (req, res) => {
         max_tokens: 100,
         temperature: temperature,
         top_p: 1.0,
-        frequency_penalty: 0.2,
       }),
     });
 

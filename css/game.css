@@ -184,7 +184,7 @@ body {
 
 #question-form{
     color: white;
-    margin-top: 10vh;
+    margin-top: 5vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -268,7 +268,7 @@ body {
 
 #answer-form{
     color: white;
-    margin-top: 10vh;
+    margin-top: 5vh;
     display: flex;
     flex-direction: column;
     align-items: center;

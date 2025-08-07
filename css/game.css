@@ -197,7 +197,7 @@ body {
 
 #question-input{
     text-align: center;
-    font-size: min(2vh, 3vw);
+    font-size: max(min(2vh, 3vw), 24px);
     margin-top: 4vh;
     padding: 1vh 1vw;
     width: 60%;
@@ -281,7 +281,7 @@ body {
 
 #answer-input{
     text-align: center;
-    font-size: min(2vh, 3vw);
+    font-size: max(min(2vh, 3vw), 24px);
     margin-top: 4vh;
     padding: 1vh 1vw;
     width: 60%;

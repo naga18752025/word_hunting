@@ -28,4 +28,5 @@ function stopTimer() {
     intervalId = null;
     elapsed += Date.now() - startTime;
     }
+    return formatTime(elapsed);
 }

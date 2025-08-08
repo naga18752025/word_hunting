@@ -1,4 +1,7 @@
 let theme = null;
+let sessionId = null;
+let question = null;
+let response = null;
 
 async function fetchTheme(){
     const { character: theme } = await startGame();
@@ -12,6 +15,8 @@ async function main() {
     }else{
         document.getElementById("loading3").style.display = "none";
         startTimer(); // タイマーを開始
+        const session = await createSession(theme);
+        sessionId = session.id;
     }
 }
 main();
@@ -129,12 +134,14 @@ async function questionCheck(){
     const lastComment = document.querySelector("#comments .response:last-child");
     lastComment.innerHTML = "";
     lastComment.textContent = response;
+    question = document.getElementById("question-input").value;
+    await addQuestion(sessionId, question, response);
     document.getElementById("buttons").style.display = "flex";
     document.getElementById("question-input").value = ""; 
 }
 
 // 解答の決定工程
-function answerCheck(){
+async function answerCheck(){
 
     // 本当にこの解答でいいのかを確認
     const result = confirm("本当にこの内容で解答しますか？");
@@ -176,11 +183,11 @@ function answerCheck(){
 
     if(theme === document.getElementById("answer-input").value.trim()){
         correctAnswer();
-        document.getElementById("checked-answer").textContent = document.getElementById("answer-input").value;
     }else{
         wrongAnswer();
-        document.getElementById("checked-answer").textContent = document.getElementById("answer-input").value;
     };
+    document.getElementById("checked-answer").textContent = document.getElementById("answer-input").value;
+    await updateSession(sessionId, document.getElementById("answer-input").value, stopTimer());
 }
 
 // 解答が正しかった場合

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <title>逆アキネーター|ログ</title>
+    <link rel="stylesheet" href="css/log.css" />
+</head>
+<body>
+    <div id="top-logo">
+        <img src="images/title.png" alt="逆アキネーター" id="logo">
+    </div>
+    <div id="log-container">
+        <div id="log-title">みんなの履歴</div>
+        <div id="log-list">
+            <!-- ログがここに表示されます -->
+        </div>
+        <button id="back-button" onclick="back()">戻る</button>
+    </div>
+
+    <div id="modal">
+        <div id="modal-container">
+            <div id="modal-close" onclick="modalClose()">×</div>
+            <div id="modal-content">
+                <p>なし</p>
+            </div>
+        </div>
+    </div>
+    
+    <div id="loading3">
+        <div class="square-move-2"></div>
+    </div>
+
+    <script src="js/batabase.js"></script>
+    <script src="js/log.js"></script>
+</body>
+</html>

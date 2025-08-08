@@ -27,6 +27,7 @@ body {
     max-width: 400px;
     border:double 1vh black;
     background-color: #4e64bc;
+    box-shadow: 0 0 1vh rgba(0, 0, 0, 0.5);
 }
 
 #start-button{
@@ -37,6 +38,17 @@ body {
     border: none;
     border-radius: 1vh;
     padding: 0.5vh 5vw;
+    box-shadow: 0 1vh 1vh black;
+}
+
+#log-button{
+    font-family: 'Raleway', sans-serif;
+    font-size: min(2.5vh, 4vw);
+    margin-top: 3vh;
+    background-color: rgb(170, 255, 239);
+    border: none;
+    border-radius: 1vh;
+    padding: 0.5vh 3vw;
     box-shadow: 0 1vh 1vh black;
 }
 

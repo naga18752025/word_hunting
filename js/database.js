@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3001";
+const API_URL = "https://word-hunting.onrender.com";
 
 async function updateSession(sessionId, finalGuess, playTime, userId) {
   const res = await fetch(`${API_URL}/update-session`, {

@@ -1,4 +1,4 @@
-const BACKEND_URL = "http://localhost:3001";
+const BACKEND_URL = "https://word-hunting.onrender.com";
 
 /**
  * ゲーム開始：サーバーに新しいお題を作成させる

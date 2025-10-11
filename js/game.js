@@ -123,34 +123,10 @@ async function gameQuit(){
     if(result){
         startLoading();
         try {
-            const { answer, isCorrect } = await sendAnswerWithRetry(sessionId, "----", "中断", 3);
-            document.getElementById("check-answer-text2").textContent = answer;
-
-            stopTimer();
-            document.getElementById("timer").textContent = "中断";
-            document.getElementById("checked-answer").textContent = "----";
-            document.querySelectorAll(".question").forEach(Q => {
-                Q.style.display = "none";
-            })
-            document.querySelectorAll(".response").forEach(R => {
-                R.style.display = "none";
-            })
-            if(document.querySelector(".hint")){
-                document.querySelector(".hint").style.display = "none";
-            }
-            sessionId = null;
-            showAnswerResult(false);
-            questionFormClose();
-            answerFormClose();
-            document.getElementById("check-answer-box").style.display = "flex";
-            document.getElementById("buttons").style.display = "none";
-            document.getElementById("quit").style.display = "none";
-            document.getElementById("hint-button").style.display = "none";
-            stopLoading();
+            updateSession(sessionId, "----", "中断", localStorage.getItem("id"))
         } catch {
-            alert("通信に失敗しました。");
-            window.location.href = "index.html";
         }
+        window.location.href = "index.html";
     }
 }
 

@@ -123,7 +123,7 @@ async function gameQuit(){
     if(result){
         startLoading();
         try {
-            updateSession(sessionId, "----", "中断", localStorage.getItem("id"))
+            await updateSession(sessionId, "----", "中断", localStorage.getItem("id"))
         } catch {
         }
         window.location.href = "index.html";
